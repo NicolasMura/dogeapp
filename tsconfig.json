@@ -19,7 +19,8 @@
       "@doge/core/models": ["src/app/core/models/index.ts"],
       "@doge/core/services": ["src/app/core/services/index.ts"],
       "@doge/core/utils": ["src/app/core/utils/index.ts"],
-      "@doge/ui": ["src/app/ui/index.ts"]
+      "@doge/ui": ["src/app/ui/index.ts"],
+      "@doge/features/market/pages": ["src/app/features/market/pages/index.ts"]
     }
   },
   "angularCompilerOptions": {

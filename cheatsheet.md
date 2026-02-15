@@ -70,3 +70,9 @@ UI components (like Header) added with:
 ```bash
 ng g c ui/header
 ```
+
+Feature (like market) added with:
+
+```bash
+ng g c features/market/pages/market-page
+```

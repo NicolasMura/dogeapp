@@ -17,5 +17,6 @@ export default {
         'test',
       ],
     ],
+    'header-max-length': [2, 'always', 120],
   },
 };

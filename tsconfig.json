@@ -13,7 +13,13 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@doge/core/models": ["src/app/core/models/index.ts"],
+      "@doge/core/services": ["src/app/core/services/index.ts"],
+      "@doge/core/utils": ["src/app/core/utils/index.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

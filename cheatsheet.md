@@ -21,7 +21,7 @@ ESLint and Prettier added with:
 ```bash
 ng add @angular-eslint/schematics
 npm install --save-dev prettier
-npm install --save-dev eslint-config-prettier --legacy-peer-deps
+npm install --save-dev --legacy-peer-deps eslint-config-prettier prettier-plugin-organize-imports
 ```
 
 Commitlint added with:
@@ -56,5 +56,11 @@ ng add @angular/material
 ng-mocks added with:
 
 ```bash
-npm install ng-mocks --save-dev --legacy-peer-deps
+npm install --save-dev --legacy-peer-deps ng-mocks
+```
+
+CoincapService service added with:
+
+```bash
+ng g s core/services/coincap-service
 ```

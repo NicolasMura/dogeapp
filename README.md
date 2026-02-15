@@ -54,3 +54,9 @@ This project was generated with the help of below command:
 ```bash
 ng new dogeapp --ai-config=copilot --package-manager=npm --prefix=doge --routing --ssr=false --standalone --style=tailwind
 ```
+
+ESLint added with:
+
+```bash
+ng add @angular-eslint/schematics
+```

@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'doge-root',
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   protected readonly title = signal('dogeapp');

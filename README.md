@@ -70,6 +70,7 @@ ESLint and Prettier added with:
 ```bash
 ng add @angular-eslint/schematics
 npm install --save-dev prettier
+npm install --save-dev eslint-config-prettier --legacy-peer-deps
 ```
 
 Commitlint added with:
@@ -89,11 +90,4 @@ ng-mocks added with:
 
 ```bash
 npm install ng-mocks --save-dev --legacy-peer-deps
-```
-
-Playwright added with:
-
-```bash
-npm install @vitest/browser-playwright playwright --save-dev --legacy-peer-deps
-npx playwright install chromium
 ```

@@ -55,10 +55,27 @@ This project was generated with the help of below command:
 ng new dogeapp --ai-config=copilot --package-manager=npm --prefix=doge --routing --ssr=false --standalone --style=tailwind
 ```
 
-ESLint added with:
+Husky added with:
+
+```bash
+npm install --save-dev husky
+npx husky init
+echo "npm run lint" >> .husky/pre-commit
+echo "npx --no -- commitlint --edit $1" > .husky/commit-msg
+```
+
+ESLint and Prettier added with:
 
 ```bash
 ng add @angular-eslint/schematics
+npm install --save-dev prettier
+```
+
+Commitlint added with:
+
+```bash
+npm install --save-dev @commitlint/config-angular @commitlint/cli
+echo "export default {extends: ['@commitlint/config-angular']};" > commitlint.config.js
 ```
 
 Angular Material added with:

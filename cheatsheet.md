@@ -31,7 +31,7 @@ npm install --save-dev @commitlint/config-angular @commitlint/cli
 echo "export default {extends: ['@commitlint/config-angular']};" > commitlint.config.js
 ```
 
-Personnalisation `commitlint.config.js` :
+Customize `commitlint.config.js` :
 
 ```js
 export default {

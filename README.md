@@ -60,3 +60,9 @@ ESLint added with:
 ```bash
 ng add @angular-eslint/schematics
 ```
+
+Angular Material added with:
+
+```bash
+ng add @angular/material
+```

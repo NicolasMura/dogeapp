@@ -62,6 +62,7 @@ npm install --save-dev husky
 npx husky init
 echo "npm run lint" >> .husky/pre-commit
 echo "npx --no -- commitlint --edit $1" > .husky/commit-msg
+echo "npm test --ci" > .husky/pre-push
 ```
 
 ESLint and Prettier added with:
@@ -82,4 +83,17 @@ Angular Material added with:
 
 ```bash
 ng add @angular/material
+```
+
+ng-mocks added with:
+
+```bash
+npm install ng-mocks --save-dev --legacy-peer-deps
+```
+
+Playwright added with:
+
+```bash
+npm install @vitest/browser-playwright playwright --save-dev --legacy-peer-deps
+npx playwright install chromium
 ```

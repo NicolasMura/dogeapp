@@ -1,22 +1,17 @@
-import { TestBed } from '@angular/core/testing';
+import { MockBuilder, MockRender } from 'ng-mocks';
 import { App } from './app';
 
 describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
-    }).compileComponents();
-  });
+  beforeEach(() => MockBuilder(App));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
+    const fixture = MockRender(App);
+    const app = fixture.point.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
+  it('should render title', () => {
+    const fixture = MockRender(App);
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('Hello, dogeapp');
   });

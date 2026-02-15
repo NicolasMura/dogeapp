@@ -64,3 +64,9 @@ CoincapService service added with:
 ```bash
 ng g s core/services/coincap-service
 ```
+
+UI components (like Header) added with:
+
+```bash
+ng g c ui/header
+```

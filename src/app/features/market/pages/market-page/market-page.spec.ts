@@ -1,5 +1,5 @@
-import { MarketPage } from '@doge/features/market/pages';
 import { MockBuilder, MockRender } from 'ng-mocks';
+import { MarketPage } from './market-page';
 
 describe('MarketPage', () => {
   beforeEach(() => MockBuilder(MarketPage));

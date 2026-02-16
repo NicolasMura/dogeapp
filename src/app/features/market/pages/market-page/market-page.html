@@ -1,1 +1,17 @@
-<p>market-page works!</p>
+<section class="grid gap-6">
+  <div class="flex items-end justify-between gap-4">
+    <div>
+      <h1 class="text-3xl">Market overview</h1>
+      <p class="mt-1 text-sm text-slate-500">
+        BTC, ETH and DOGE. Very serious finance. Much professional.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    @for (a of assets | async; track a.id) {
+      <doge-price-card [asset]="a" [highlight]="a.id === 'dogecoin'"></doge-price-card>
+    }
+    <div></div>
+  </div>
+</section>

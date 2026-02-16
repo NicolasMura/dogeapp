@@ -1,5 +1,5 @@
-import { Header } from '@doge/ui';
 import { MockBuilder, MockRender } from 'ng-mocks';
+import { Header } from './header';
 
 describe('Header', () => {
   beforeEach(() => MockBuilder(Header));

@@ -1,0 +1,10 @@
+@let a = asset();
+
+<mat-card appearance="outlined" [class.highlighted]="highlight()">
+  <mat-card-content>
+    <div>{{ a?.name }}</div>
+    <div class="mt-1 text-2xl">
+      {{ a?.priceUsd | currency: 'EUR' : 'symbol' : '1.2-2' }}
+    </div>
+  </mat-card-content>
+</mat-card>

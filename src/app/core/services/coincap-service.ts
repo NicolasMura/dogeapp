@@ -12,16 +12,19 @@ export class CoincapService {
 
   readonly baseUrl = 'https://rest.coincap.io/v3';
 
-  readonly isLoadingAssets = signal(false);
-  readonly assetsError = signal<unknown | null>(null);
+  readonly #isLoadingAssets = signal(false);
+  readonly isLoadingAssets = this.#isLoadingAssets.asReadonly();
 
-  readonly isLoadingTopExchange = signal(false);
+  readonly #isLoadingTopExchange = signal(false);
+  readonly isLoadingTopExchange = this.#isLoadingTopExchange.asReadonly();
+
+  readonly assetsError = signal<unknown | null>(null);
   readonly topExchangeError = signal<unknown | null>(null);
 
   getAssets(ids: CoincapAssetId[]): Observable<Asset[]> {
     const params = new URLSearchParams({ ids: ids.join(',') });
 
-    this.isLoadingAssets.set(true);
+    this.#isLoadingAssets.set(true);
     this.assetsError.set(null);
 
     return this.#http
@@ -40,7 +43,7 @@ export class CoincapService {
           this.assetsError.set('Failed to load assets. Please try again later.');
           return throwError(() => err);
         }),
-        finalize(() => this.isLoadingAssets.set(false)),
+        finalize(() => this.#isLoadingAssets.set(false)),
       );
   }
 
@@ -48,7 +51,7 @@ export class CoincapService {
     // The API returns the exchanges sorted by 24h volume, so the first one is the top exchange
     const limit = 1;
 
-    this.isLoadingTopExchange.set(true);
+    this.#isLoadingTopExchange.set(true);
     this.topExchangeError.set(null);
 
     return this.#http
@@ -68,7 +71,7 @@ export class CoincapService {
           this.topExchangeError.set('Failed to load top exchange. Please try again later.');
           return throwError(() => err);
         }),
-        finalize(() => this.isLoadingTopExchange.set(false)),
+        finalize(() => this.#isLoadingTopExchange.set(false)),
       );
   }
 }

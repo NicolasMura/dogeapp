@@ -1,3 +1,5 @@
+@let assets = assets$ | async;
+
 <section class="grid gap-6">
   <div class="flex items-end justify-between gap-4">
     <div>
@@ -10,10 +12,17 @@
     <button matButton="outlined" (click)="reload()">Rafraîchir</button>
   </div>
 
+  @if (isLoading() && !assets?.length) {
+    <mat-progress-spinner mode="indeterminate" diameter="50" class="mx-auto"></mat-progress-spinner>
+  }
+
   <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-    @for (a of assets | async; track a.id) {
-      <doge-price-card [asset]="a" [highlight]="a.id === 'dogecoin'"></doge-price-card>
+    @for (asset of assets; track asset.id) {
+      <doge-price-card
+        [asset]="asset"
+        [highlight]="asset.id === 'dogecoin'"
+        [isLoading]="isLoading()"
+      ></doge-price-card>
     }
-    <div></div>
   </div>
 </section>

@@ -13,4 +13,5 @@ import { Asset } from '@doge/core/models';
 export class PriceCard {
   asset = input<Asset>();
   highlight = input<boolean>();
+  isLoading = input<boolean>();
 }

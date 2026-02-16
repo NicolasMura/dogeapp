@@ -18,8 +18,8 @@ export class CoincapService {
   readonly #isLoadingTopExchange = signal(false);
   readonly isLoadingTopExchange = this.#isLoadingTopExchange.asReadonly();
 
-  readonly assetsError = signal<unknown | null>(null);
-  readonly topExchangeError = signal<unknown | null>(null);
+  readonly assetsError = signal<string | null>(null);
+  readonly topExchangeError = signal<string | null>(null);
 
   getAssets(ids: CoincapAssetId[]): Observable<Asset[]> {
     const params = new URLSearchParams({ ids: ids.join(',') });
@@ -50,12 +50,13 @@ export class CoincapService {
   getTopExchangeBy24hVolume(): Observable<Exchange> {
     // The API returns the exchanges sorted by 24h volume, so the first one is the top exchange
     const limit = 1;
+    const params = new URLSearchParams({ limit: limit.toString() });
 
     this.#isLoadingTopExchange.set(true);
     this.topExchangeError.set(null);
 
     return this.#http
-      .get<CoincapResponse<Exchange[]>>(`${this.baseUrl}/exchanges?limit=${limit}`)
+      .get<CoincapResponse<Exchange[]>>(`${this.baseUrl}/exchanges?${params.toString()}`)
       .pipe(
         map((res) =>
           (res.data ?? []).map((e) => ({

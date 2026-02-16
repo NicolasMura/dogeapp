@@ -16,23 +16,31 @@
   @if (isLoadingAssets() && !assets?.length) {
     <mat-progress-spinner mode="indeterminate" diameter="50" class="mx-auto"></mat-progress-spinner>
   } @else {
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-      @for (asset of assets; track asset.id) {
-        <doge-price-card
-          [asset]="asset"
-          [highlight]="asset.id === 'dogecoin'"
-          [isLoading]="isLoadingAssets()"
-        />
-      }
-    </div>
+    @if (assetsError(); as error) {
+      <doge-error [errorMessage]="error"></doge-error>
+    } @else {
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        @for (asset of assets; track asset.id) {
+          <doge-price-card
+            [asset]="asset"
+            [highlight]="asset.id === 'dogecoin'"
+            [isLoading]="isLoadingAssets()"
+          />
+        }
+      </div>
+    }
   }
 
   @if (isLoadingTopExchange() && !topExchange) {
     <mat-progress-spinner mode="indeterminate" diameter="50" class="mx-auto"></mat-progress-spinner>
   } @else {
-    <doge-exchange-highlight
-      [exchange]="topExchange ?? undefined"
-      [isLoading]="isLoadingTopExchange()"
-    />
+    @if (topExchangeError(); as error) {
+      <doge-error [errorMessage]="error"></doge-error>
+    } @else {
+      <doge-exchange-highlight
+        [exchange]="topExchange ?? undefined"
+        [isLoading]="isLoadingTopExchange()"
+      />
+    }
   }
 </section>

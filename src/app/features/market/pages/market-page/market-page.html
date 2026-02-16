@@ -1,4 +1,5 @@
 @let assets = assets$ | async;
+@let topExchange = topExchange$ | async;
 
 <section class="grid gap-6">
   <div class="flex items-end justify-between gap-4">
@@ -12,17 +13,26 @@
     <button matButton="outlined" (click)="reload()">Rafraîchir</button>
   </div>
 
-  @if (isLoading() && !assets?.length) {
+  @if (isLoadingAssets() && !assets?.length) {
     <mat-progress-spinner mode="indeterminate" diameter="50" class="mx-auto"></mat-progress-spinner>
+  } @else {
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      @for (asset of assets; track asset.id) {
+        <doge-price-card
+          [asset]="asset"
+          [highlight]="asset.id === 'dogecoin'"
+          [isLoading]="isLoadingAssets()"
+        />
+      }
+    </div>
   }
 
-  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-    @for (asset of assets; track asset.id) {
-      <doge-price-card
-        [asset]="asset"
-        [highlight]="asset.id === 'dogecoin'"
-        [isLoading]="isLoading()"
-      ></doge-price-card>
-    }
-  </div>
+  @if (isLoadingTopExchange() && !topExchange) {
+    <mat-progress-spinner mode="indeterminate" diameter="50" class="mx-auto"></mat-progress-spinner>
+  } @else {
+    <doge-exchange-highlight
+      [exchange]="topExchange ?? undefined"
+      [isLoading]="isLoadingTopExchange()"
+    />
+  }
 </section>

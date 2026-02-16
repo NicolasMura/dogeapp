@@ -11,7 +11,7 @@ import { Asset } from '@doge/core/models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PriceCard {
-  asset = input<Asset>();
-  highlight = input<boolean>();
-  isLoading = input<boolean>();
+  readonly asset = input<Asset>();
+  readonly highlight = input<boolean>();
+  readonly isLoading = input<boolean>();
 }

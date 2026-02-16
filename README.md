@@ -41,8 +41,4 @@ npm test
 
 ## Running end-to-end tests with Cypress
 
-For end-to-end (e2e) testing, run:
-
-```bash
-npm e2e
-```
+@TODO...

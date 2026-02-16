@@ -21,6 +21,7 @@
       "@doge/core/utils": ["src/app/core/utils/index.ts"],
       "@doge/ui": ["src/app/ui/index.ts"],
       "@doge/features/market/pages": ["src/app/features/market/pages/index.ts"],
+      "@doge/features/tickets/pages": ["src/app/features/tickets/pages/index.ts"],
       "@doge/features/market/components": ["src/app/features/market/components/index.ts"]
     }
   },

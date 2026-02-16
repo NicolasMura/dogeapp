@@ -2,6 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { RouterLink } from '@angular/router';
 import { CoincapService } from '@doge/core/services';
 import { ExchangeHighlight, PriceCard } from '@doge/features/market/components';
 import { Error } from '@doge/ui';
@@ -9,7 +10,15 @@ import { catchError, startWith, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'doge-market-page',
-  imports: [AsyncPipe, MatButton, MatProgressSpinner, PriceCard, ExchangeHighlight, Error],
+  imports: [
+    AsyncPipe,
+    MatButton,
+    MatProgressSpinner,
+    PriceCard,
+    ExchangeHighlight,
+    Error,
+    RouterLink,
+  ],
   templateUrl: './market-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

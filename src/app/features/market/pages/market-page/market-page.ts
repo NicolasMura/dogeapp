@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { CoincapService } from '@doge/core/services';
 import { PriceCard } from '@doge/features/market/components';
+import { startWith, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'doge-market-page',
@@ -13,12 +14,16 @@ import { PriceCard } from '@doge/features/market/components';
 export class MarketPage {
   readonly #coincapService = inject(CoincapService);
 
-  readonly assets = this.#coincapService.getAssets(['bitcoin', 'ethereum', 'dogecoin']);
+  readonly refresh$ = new Subject<void>();
+  readonly assets = this.refresh$.pipe(
+    startWith(null),
+    switchMap(() => this.#coincapService.getAssets(['bitcoin', 'ethereum', 'dogecoin'])),
+  );
 
   readonly isLoading = this.#coincapService.isLoadingAssets;
   readonly error = this.#coincapService.assetsError;
 
   reload() {
-    console.error('reload not implemented yet');
+    this.refresh$.next();
   }
 }

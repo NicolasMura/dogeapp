@@ -33,7 +33,7 @@ describe('CoincapService', () => {
     expect(service.isLoadingAssets()).toBeTruthy();
 
     const expectedUrl = `${service.baseUrl}/assets?${new URLSearchParams({ ids: ids.join(',') }).toString()}`;
-    expect(http.get).toHaveBeenCalledWith(expectedUrl);
+    expect(http.get).toHaveBeenCalledWith(expectedUrl, undefined);
 
     subject.next({
       data: [
@@ -103,7 +103,7 @@ describe('CoincapService', () => {
 
     // while pending
     expect(service.isLoadingTopExchange()).toBeTruthy();
-    expect(http.get).toHaveBeenCalledWith(`${service.baseUrl}/exchanges?limit=1`);
+    expect(http.get).toHaveBeenCalledWith(`${service.baseUrl}/exchanges?limit=1`, undefined);
 
     subject.next({
       data: [

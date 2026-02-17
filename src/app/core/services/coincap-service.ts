@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Asset, CoincapAssetId, CoincapResponse, Exchange } from '@doge/core/models';
 import { toNumber } from '@doge/core/utils';
@@ -12,6 +12,9 @@ export class CoincapService {
 
   readonly baseUrl = 'https://rest.coincap.io/v3';
 
+  apiKey: string | undefined;
+  headers: HttpHeaders | undefined;
+
   readonly #isLoadingAssets = signal(false);
   readonly isLoadingAssets = this.#isLoadingAssets.asReadonly();
 
@@ -21,14 +24,34 @@ export class CoincapService {
   readonly assetsError = signal<string | null>(null);
   readonly topExchangeError = signal<string | null>(null);
 
+  constructor() {
+    this.apiKey = (globalThis as { __COINCAP_API_KEY__?: string }).__COINCAP_API_KEY__;
+    this.headers = this.apiKey
+      ? new HttpHeaders({ Authorization: `Bearer ${this.apiKey}` })
+      : undefined;
+
+    if (!this.apiKey) {
+      console.warn('No Coincap API key provided. Requests may be rate limited.');
+    } else {
+      console.log('Using Coincap API key:', this.apiKey);
+      console.log('Using Coincap API key:', this.headers?.get('Authorization'));
+    }
+  }
+
   getAssets(ids: CoincapAssetId[]): Observable<Asset[]> {
     const params = new URLSearchParams({ ids: ids.join(',') });
 
     this.#isLoadingAssets.set(true);
     this.assetsError.set(null);
 
+    console.log(
+      'Using Coincap API key:',
+      this.headers ? this.headers?.get('Authorization') : 'No API key',
+    );
     return this.#http
-      .get<CoincapResponse<Asset[]>>(`${this.baseUrl}/assets?${params.toString()}`)
+      .get<
+        CoincapResponse<Asset[]>
+      >(`${this.baseUrl}/assets?${params.toString()}`, this.headers ? { headers: this.headers } : undefined)
       .pipe(
         map((res) =>
           (res.data ?? []).map((a) => ({
@@ -56,7 +79,9 @@ export class CoincapService {
     this.topExchangeError.set(null);
 
     return this.#http
-      .get<CoincapResponse<Exchange[]>>(`${this.baseUrl}/exchanges?${params.toString()}`)
+      .get<
+        CoincapResponse<Exchange[]>
+      >(`${this.baseUrl}/exchanges?${params.toString()}`, this.headers ? { headers: this.headers } : undefined)
       .pipe(
         map((res) =>
           (res.data ?? []).map((e) => ({

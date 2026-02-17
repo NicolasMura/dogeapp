@@ -12,9 +12,6 @@ export class CoincapService {
 
   readonly baseUrl = 'https://rest.coincap.io/v3';
 
-  apiKey: string | undefined;
-  headers: HttpHeaders | undefined;
-
   readonly #isLoadingAssets = signal(false);
   readonly isLoadingAssets = this.#isLoadingAssets.asReadonly();
 
@@ -23,20 +20,6 @@ export class CoincapService {
 
   readonly assetsError = signal<string | null>(null);
   readonly topExchangeError = signal<string | null>(null);
-
-  constructor() {
-    this.apiKey = (globalThis as { __COINCAP_API_KEY__?: string }).__COINCAP_API_KEY__;
-    this.headers = this.apiKey
-      ? new HttpHeaders({ Authorization: `Bearer ${this.apiKey}` })
-      : undefined;
-
-    if (!this.apiKey) {
-      console.warn('No Coincap API key provided. Requests may be rate limited.');
-    } else {
-      console.log('Using Coincap API key:', this.apiKey);
-      console.log('Using Coincap API key:', this.headers?.get('Authorization'));
-    }
-  }
 
   getAssets(ids: CoincapAssetId[]): Observable<Asset[]> {
     const params = new URLSearchParams({ ids: ids.join(',') });
@@ -48,10 +31,6 @@ export class CoincapService {
     this.#isLoadingAssets.set(true);
     this.assetsError.set(null);
 
-    console.log(
-      'Using Coincap API key:',
-      this.headers ? this.headers?.get('Authorization') : 'No API key',
-    );
     return this.#http
       .get<
         CoincapResponse<Asset[]>

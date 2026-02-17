@@ -30,13 +30,17 @@ export class MarketPage {
   readonly refresh$ = new Subject<void>();
   readonly assets$ = this.refresh$.pipe(
     startWith(null),
-    switchMap(() => this.#coincapService.getAssets(['bitcoin', 'ethereum', 'dogecoin'])),
-    catchError(() => of([])),
+    switchMap(() =>
+      this.#coincapService
+        .getAssets(['bitcoin', 'ethereum', 'dogecoin'])
+        .pipe(catchError(() => of([]))),
+    ),
   );
   readonly topExchange$ = this.refresh$.pipe(
     startWith(null),
-    switchMap(() => this.#coincapService.getTopExchangeBy24hVolume()),
-    catchError(() => of(null)),
+    switchMap(() =>
+      this.#coincapService.getTopExchangeBy24hVolume().pipe(catchError(() => of(null))),
+    ),
   );
 
   // Loading & error states

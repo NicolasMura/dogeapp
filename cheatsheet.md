@@ -3,31 +3,31 @@
 This project was generated with the help of below command:
 
 ```bash
-ng new dogeapp --ai-config=copilot --package-manager=npm --prefix=doge --routing --ssr=false --standalone --style=tailwind
+ng new dogeapp --ai-config=copilot --package-manager=yarn --prefix=doge --routing --ssr=false --standalone --style=tailwind
 ```
 
 Husky added with:
 
 ```bash
-npm install --save-dev husky
+yarn add -D husky
 npx husky init
-echo "npm run lint" >> .husky/pre-commit
+echo "yarn lint" >> .husky/pre-commit
 echo "npx --no -- commitlint --edit $1" > .husky/commit-msg
-echo "npm test --ci" > .husky/pre-push
+echo "yarn test:ci" > .husky/pre-push
 ```
 
 ESLint and Prettier added with:
 
 ```bash
 ng add @angular-eslint/schematics
-npm install --save-dev prettier
-npm install --save-dev --legacy-peer-deps eslint-config-prettier prettier-plugin-organize-imports
+yarn add -D prettier
+yarn add -D eslint-config-prettier prettier-plugin-organize-imports
 ```
 
 Commitlint added with:
 
 ```bash
-npm install --save-dev @commitlint/config-angular @commitlint/cli
+yarn add -D @commitlint/config-angular @commitlint/cli
 echo "export default {extends: ['@commitlint/config-angular']};" > commitlint.config.js
 ```
 
@@ -53,10 +53,10 @@ Angular Material added with:
 ng add @angular/material
 ```
 
-ng-mocks added with:
+ng-mocks and @vitest/coverage-v8 added with:
 
 ```bash
-npm install --save-dev --legacy-peer-deps ng-mocks
+yarn add -D ng-mocks @vitest/coverage-v8
 ```
 
 CoincapService service added with:

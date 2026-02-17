@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Asset, CoincapAssetId, CoincapResponse, Exchange } from '@doge/core/models';
 import { toNumber } from '@doge/core/utils';
@@ -24,11 +24,17 @@ export class CoincapService {
   getAssets(ids: CoincapAssetId[]): Observable<Asset[]> {
     const params = new URLSearchParams({ ids: ids.join(',') });
 
+    // @TEST Only for testing purposes, we can set the API key in a global variable
+    const apiKey = (globalThis as { __COINCAP_API_KEY__?: string }).__COINCAP_API_KEY__;
+    const headers = apiKey ? new HttpHeaders({ Authorization: `Bearer ${apiKey}` }) : undefined;
+
     this.#isLoadingAssets.set(true);
     this.assetsError.set(null);
 
     return this.#http
-      .get<CoincapResponse<Asset[]>>(`${this.baseUrl}/assets?${params.toString()}`)
+      .get<
+        CoincapResponse<Asset[]>
+      >(`${this.baseUrl}/assets?${params.toString()}`, headers ? { headers } : undefined)
       .pipe(
         map((res) =>
           (res.data ?? []).map((a) => ({
@@ -52,11 +58,17 @@ export class CoincapService {
     const limit = 1;
     const params = new URLSearchParams({ limit: limit.toString() });
 
+    // @TEST Only for testing purposes, we can set the API key in a global variable
+    const apiKey = (globalThis as { __COINCAP_API_KEY__?: string }).__COINCAP_API_KEY__;
+    const headers = apiKey ? new HttpHeaders({ Authorization: `Bearer ${apiKey}` }) : undefined;
+
     this.#isLoadingTopExchange.set(true);
     this.topExchangeError.set(null);
 
     return this.#http
-      .get<CoincapResponse<Exchange[]>>(`${this.baseUrl}/exchanges?${params.toString()}`)
+      .get<
+        CoincapResponse<Exchange[]>
+      >(`${this.baseUrl}/exchanges?${params.toString()}`, headers ? { headers } : undefined)
       .pipe(
         map((res) =>
           (res.data ?? []).map((e) => ({

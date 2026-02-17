@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Asset, CoincapAssetId, CoincapResponse, Exchange } from '@doge/core/models';
 import { toNumber } from '@doge/core/utils';
@@ -11,6 +11,11 @@ export class CoincapService {
   readonly #http = inject(HttpClient);
 
   readonly baseUrl = 'https://rest.coincap.io/v3';
+
+  apiKey = (globalThis as { __COINCAP_API_KEY__?: string }).__COINCAP_API_KEY__ as
+    | string
+    | undefined;
+  headers = this.apiKey ? new HttpHeaders({ Authorization: `Bearer ${this.apiKey}` }) : undefined;
 
   readonly #isLoadingAssets = signal(false);
   readonly isLoadingAssets = this.#isLoadingAssets.asReadonly();
@@ -28,7 +33,9 @@ export class CoincapService {
     this.assetsError.set(null);
 
     return this.#http
-      .get<CoincapResponse<Asset[]>>(`${this.baseUrl}/assets?${params.toString()}`)
+      .get<
+        CoincapResponse<Asset[]>
+      >(`${this.baseUrl}/assets?${params.toString()}`, this.headers ? { headers: this.headers } : undefined)
       .pipe(
         map((res) =>
           (res.data ?? []).map((a) => ({
@@ -56,7 +63,9 @@ export class CoincapService {
     this.topExchangeError.set(null);
 
     return this.#http
-      .get<CoincapResponse<Exchange[]>>(`${this.baseUrl}/exchanges?${params.toString()}`)
+      .get<
+        CoincapResponse<Exchange[]>
+      >(`${this.baseUrl}/exchanges?${params.toString()}`, this.headers ? { headers: this.headers } : undefined)
       .pipe(
         map((res) =>
           (res.data ?? []).map((e) => ({

@@ -1,0 +1,38 @@
+<div class="grid gap-3">
+  <div class="flex items-center justify-between text-sm">
+    <span class="text-slate-600">Tickets</span>
+    <span>{{ quantity() }}</span>
+  </div>
+
+  <div class="flex items-center justify-between text-sm">
+    <span class="text-slate-600">Subtotal</span>
+    <span>{{ subtotalEur() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+  </div>
+
+  @if (discountEur() > 0) {
+    <div class="flex items-center justify-between text-sm">
+      <span class="text-emerald-700">Discount (5%)</span>
+      <span class="text-emerald-700">
+        -{{ discountEur() | currency: 'EUR' : 'symbol' : '1.2-2' }}
+      </span>
+    </div>
+  }
+
+  <div class="h-px bg-slate-200"></div>
+
+  <div class="flex items-center justify-between">
+    <span class="text-sm">Total</span>
+    <span class="text-lg">{{ totalEur() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+  </div>
+
+  <div class="flex items-center justify-between text-sm">
+    <span class="text-slate-600">Total in DOGE</span>
+    <span>{{ totalDoge() | currency: 'EUR' : '' : '1.2-2' }} DOGE</span>
+  </div>
+
+  @if (discountEur() > 0) {
+    <div class="rounded-xl bg-emerald-50 px-3 py-2 text-xs text-emerald-800">
+      such deal! 5% off for 2+ tickets
+    </div>
+  }
+</div>

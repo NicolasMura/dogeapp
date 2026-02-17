@@ -3,12 +3,10 @@
 
 <section class="grid gap-6">
   <div class="flex items-end justify-between gap-4">
-    <div>
-      <h1 class="text-3xl">Market overview</h1>
-      <p class="mt-1 text-sm text-slate-500">
-        BTC, ETH and DOGE. Very serious finance. Much professional.
-      </p>
-    </div>
+    <doge-page-title
+      h1="Market overview"
+      p="BTC, ETH and DOGE. Very serious finance. Much professional."
+    ></doge-page-title>
 
     <button matButton="outlined" (click)="reload()">Rafraîchir</button>
   </div>
@@ -45,6 +43,6 @@
   }
 
   <div class="ml-auto">
-    <button matButton="filled" routerLink="/tickets">Buy tickets →</button>
+    <button matButton="filled" routerLink="/tickets">Buy tickets in DOGE →</button>
   </div>
 </section>

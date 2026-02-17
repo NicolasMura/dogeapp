@@ -5,8 +5,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import { CoincapService } from '@doge/core/services';
 import { ExchangeHighlight, PriceCard } from '@doge/features/market/components';
-import { Error } from '@doge/ui';
-import { catchError, startWith, Subject, switchMap } from 'rxjs';
+import { Error, PageTitle } from '@doge/ui';
+import { catchError, of, startWith, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'doge-market-page',
@@ -16,6 +16,7 @@ import { catchError, startWith, Subject, switchMap } from 'rxjs';
     MatProgressSpinner,
     PriceCard,
     ExchangeHighlight,
+    PageTitle,
     Error,
     RouterLink,
   ],
@@ -30,12 +31,12 @@ export class MarketPage {
   readonly assets$ = this.refresh$.pipe(
     startWith(null),
     switchMap(() => this.#coincapService.getAssets(['bitcoin', 'ethereum', 'dogecoin'])),
-    catchError(() => []),
+    catchError(() => of([])),
   );
   readonly topExchange$ = this.refresh$.pipe(
     startWith(null),
     switchMap(() => this.#coincapService.getTopExchangeBy24hVolume()),
-    catchError(() => []),
+    catchError(() => of(null)),
   );
 
   // Loading & error states

@@ -1,3 +1,59 @@
-<div>
-  <button matButton="filled" routerLink="/market">← Back</button>
-</div>
+<section class="grid gap-6">
+  <div class="flex items-end justify-between gap-4">
+    <doge-page-title
+      h1="Doge Ticket Shop"
+      p="Buy Paris transport tickets in DOGE. (Totally real. April 1st vibes.)"
+    ></doge-page-title>
+
+    <button matButton="filled" routerLink="/market">← Back</button>
+  </div>
+
+  @let priceEuro = dogePriceEur();
+
+  <div class="rounded-2xl border bg-white p-5 shadow-sm">
+    <div class="grid gap-6">
+      <div class="grid gap-1">
+        <div class="text-sm text-slate-600">Ticket price</div>
+        <div class="text-xl tabular-nums">
+          @if (isLoadingDogePrice()) {
+            <mat-progress-spinner mode="indeterminate" diameter="20"></mat-progress-spinner>
+          } @else {
+            @if (dogePriceError(); as error) {
+              <doge-error [errorMessage]="error"></doge-error>
+            } @else {
+              @if (priceEuro) {
+                <div>4 € ≈ {{ 4 / priceEuro | currency: 'EUR' : '' : '1.2-2' }} DOGE</div>
+              } @else {
+                <div class="text-red-700">Failed to load DOGE price. Please try again later.</div>
+              }
+            }
+          }
+        </div>
+      </div>
+
+      @if (!isLoadingDogePrice() && !dogePriceError() && priceEuro) {
+        <mat-form-field>
+          <mat-label>Number of tickets</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Please enter a number"
+            [min]="1"
+            [step]="1"
+            [value]="quantity()"
+            (change)="setQuantity($event)"
+          />
+          <mat-hint align="start">5% discount from 2 tickets</mat-hint>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+
+        <doge-order-summary
+          [quantity]="quantity()"
+          [unitPriceEur]="4"
+          [dogePriceEur]="dogePriceEur()"
+        />
+      }
+    </div>
+  </div>
+</section>

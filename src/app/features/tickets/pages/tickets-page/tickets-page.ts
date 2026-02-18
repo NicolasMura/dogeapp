@@ -12,9 +12,10 @@ import { MatButton } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
 import { MatFormField, MatHint, MatInput, MatLabel } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { CoincapService } from '@doge/core/services';
-import { Error, OrderSummary, PageTitle } from '@doge/ui';
+import { Error, OrderConfirmationToast, OrderSummary, PageTitle } from '@doge/ui';
 import { tap } from 'rxjs';
 
 @Component({
@@ -38,6 +39,7 @@ import { tap } from 'rxjs';
 })
 export class TicketsPage implements OnInit {
   readonly #coincapService = inject(CoincapService);
+  readonly #snackBar = inject(MatSnackBar);
 
   private destroyRef = inject(DestroyRef);
 
@@ -55,6 +57,13 @@ export class TicketsPage implements OnInit {
   setQuantity(event: Event) {
     const input = event.target as HTMLInputElement;
     this.quantity.set(Number(input.value));
+  }
+
+  confirmPurchase() {
+    this.#snackBar.openFromComponent(OrderConfirmationToast, {
+      duration: 5000,
+    });
+    this.quantity.set(1);
   }
 
   private loadDoge() {

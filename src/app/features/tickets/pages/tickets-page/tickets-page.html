@@ -53,6 +53,11 @@
           [unitPriceEur]="4"
           [dogePriceEur]="dogePriceEur()"
         />
+
+        <div class="flex justify-end gap-4">
+          <button matButton="outlined" routerLink="/market">Cancel</button>
+          <button matButton="filled" (click)="confirmPurchase()">Confirm purchase</button>
+        </div>
       }
     </div>
   </div>
